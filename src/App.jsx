@@ -25,6 +25,9 @@ function App() {
     const [attacker, attackType] = selectedAttack;
     attack(attacker, attackType, target);
 
+    setSelectedAttack(null);
+    setSelectedTarget(null);
+
     if (target["hp"] == 0)
       setOpponentTeam(opponentTeam.filter(hero => hero !== target));
   }
@@ -43,7 +46,13 @@ function App() {
         <div className="relative w-full flex flex-row gap-10 items-center justify-center">
           <h2 className="absolute top-0 left-0 m-2">Your team</h2>
           {playerTeam && playerTeam.map(hero => (
-            <HeroCard key={hero["id"]} data={hero} attackSelectable={true} onAttackSelected={handleAttackSelected} />
+            <HeroCard
+              key={hero["id"]}
+              data={hero}
+              attackSelectable={true}
+              selectedAttack={selectedAttack}
+              onAttackSelected={handleAttackSelected}
+            />
           ))}
         </div>
       </div>
