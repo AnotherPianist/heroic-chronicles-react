@@ -12,6 +12,7 @@ function App() {
   const [opponentTeam, setOpponentTeam] = useState([]);
   const [playerTeam, setPlayerTeam] = useState([]);
   const [winningMessage, setWinningMessage] = useState("");
+  const [isPlayerTurn, setIsPlayerTurn] = useState(true);
   const [selectedAttack, setSelectedAttack] = useState(null);
   const [selectedTarget, setSelectedTarget] = useState(null);
   const [message, setMessage] = useState("");
@@ -37,6 +38,8 @@ function App() {
   }
 
   async function handleTargetSelected(target) {
+    setIsPlayerTurn(false);
+
     const updatedOpponentTeam = await playerTurn(target);
 
     let updatedWinningMessage = checkWinningCondition(playerTeam, updatedOpponentTeam);
@@ -50,6 +53,8 @@ function App() {
     updatedWinningMessage = checkWinningCondition(updatedPlayerTeam, updatedOpponentTeam);
     if (updatedWinningMessage)
       setWinningMessage(updatedWinningMessage);
+
+    setIsPlayerTurn(true);
   }
 
   async function playerTurn(target) {
@@ -113,7 +118,7 @@ function App() {
               <HeroCard
                 key={hero["id"]}
                 data={hero}
-                attackSelectable={!selectedAttack}
+                attackSelectable={isPlayerTurn && !selectedAttack}
                 selectedAttack={selectedAttack}
                 onAttackSelected={handleAttackSelected}
               />
