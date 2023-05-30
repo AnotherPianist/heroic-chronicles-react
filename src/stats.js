@@ -27,3 +27,12 @@ export function calculateStats(hero) {
 
   return stats;
 }
+
+export function calculateHP(hero) {
+  const stats = hero["stats"];
+  const fb = hero["filiationCoefficient"];
+
+  const hp = Math.floor(((stats["strength"] * 0.8 + stats["durability"] * 0.7 + stats["power"]) / 2) * (1 + (fb / 10))) + 100;
+
+  return hp;
+}
