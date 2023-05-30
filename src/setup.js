@@ -1,6 +1,6 @@
 import {getRandomIntInclusive} from "./helper.js";
 import config from "./config.json";
-import {generateActualStamina} from "./stats.js";
+import {calculateStats, generateActualStamina, generateFiliationCoefficient} from "./stats.js";
 
 
 function getRandomIds(start, end, length) {
@@ -38,6 +38,35 @@ function populateActualStamina(team) {
 }
 
 
+function getTeamAlignment(team) {
+  const alignments = team.map(hero => hero["biography"]["alignment"]);
+
+  const alignmentsCount = {};
+  alignments.forEach(alignment => alignmentsCount[alignment] = (alignmentsCount[alignment] || 0) + 1);
+
+  let mostCommonAlignment = null;
+  let mostCommonCount = 0;
+
+  Object.entries(alignmentsCount).forEach(([alignment, count]) => {
+    if (count > mostCommonCount) {
+      mostCommonAlignment = alignment;
+      mostCommonCount = count;
+    }
+  });
+
+  return mostCommonAlignment;
+}
+
+function populateFiliationCoefficient(team) {
+  const teamAlignment = getTeamAlignment(team);
+
+  team.forEach(hero => {
+    const heroAlignment = hero["biography"]["alignment"];
+    hero["filiationCoefficient"] = generateFiliationCoefficient(heroAlignment, teamAlignment);
+  });
+}
+
+
 export async function createTeams() {
   const teamSize = config["TEAM_SIZE"];
 
@@ -51,6 +80,8 @@ export async function createTeams() {
 
   teams.forEach(team => {
     populateActualStamina(team);
+    populateFiliationCoefficient(team);
+    populateStats(team);
   });
 
   return teams;
