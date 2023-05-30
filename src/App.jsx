@@ -95,7 +95,7 @@ function App() {
       <div className="absolute inset-0 -z-20 bg-[url(/src/assets/beams.jpg)] bg-center"/>
       <div className="absolute inset-0 -z-10 bg-[url(/src/assets/grid.svg)] bg-center"/>
       <div className="flex flex-col items-center justify-center gap-4 h-screen">
-        <motion.div layout className="relative w-full flex flex-row gap-10 items-center justify-center">
+        <motion.div layout="position" className="relative w-full flex flex-row gap-10 items-center justify-center">
           <h2 className="absolute top-0 left-0 m-2">Enemy's team</h2>
             {opponentTeam && opponentTeam.map(hero => (
               <HeroCard
@@ -107,7 +107,7 @@ function App() {
             ))}
         </motion.div>
         <p>{message}</p>
-        <motion.div layout className="relative w-full flex flex-row gap-10 items-center justify-center">
+        <motion.div layout="position" className="relative w-full flex flex-row gap-10 items-center justify-center">
           <h2 className="absolute top-0 left-0 m-2">Your team</h2>
             {playerTeam && playerTeam.map(hero => (
               <HeroCard
