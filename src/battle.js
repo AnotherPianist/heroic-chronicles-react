@@ -9,11 +9,13 @@ export function attack(attacker, attackType, target) {
   target["hp"] = resultingHP;
 }
 
+export const PLAYER_WIN_MESSAGE = "PLAYER TEAM WINS!";
+
 export function checkWinningCondition(playerTeam, opponentTeam) {
   if (playerTeam.length === 0)
-    return "OPPONENT TEAM WINS!";
+    return "OPPONENT TEAM WINS :(";
   else if (opponentTeam.length === 0)
-    return "PLAYER TEAM WINS!";
+    return PLAYER_WIN_MESSAGE;
   else
     return "";
 }
