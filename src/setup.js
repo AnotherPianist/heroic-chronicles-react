@@ -1,5 +1,6 @@
 import {getRandomIntInclusive} from "./helper.js";
 import config from "./config.json";
+import {generateActualStamina} from "./stats.js";
 
 
 function getRandomIds(start, end, length) {
@@ -28,6 +29,15 @@ function fetchHeroesData(ids) {
   return Promise.all(heroPromises);
 }
 
+
+function populateActualStamina(team) {
+  team.forEach(hero => {
+    const stats = hero["powerstats"];
+    hero["actualStamina"] = generateActualStamina(stats);
+  });
+}
+
+
 export async function createTeams() {
   const teamSize = config["TEAM_SIZE"];
 
@@ -37,5 +47,11 @@ export async function createTeams() {
   const team1 = heroes.slice(0, teamSize);
   const team2 = heroes.slice(teamSize);
 
-  return [team1, team2];
+  const teams = [team1, team2];
+
+  teams.forEach(team => {
+    populateActualStamina(team);
+  });
+
+  return teams;
 }
