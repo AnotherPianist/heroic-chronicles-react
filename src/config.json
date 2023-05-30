@@ -1,0 +1,6 @@
+{
+  "BASE_URL": "https://www.superheroapi.com/api.php",
+  "API_ID_START": 1,
+  "API_ID_END": 731,
+  "TEAM_SIZE": 1
+}
