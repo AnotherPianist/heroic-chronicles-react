@@ -1,7 +1,7 @@
 import {useEffect, useState} from "react";
 import {createTeams} from "./setup.js";
 import HeroCard from "./components/HeroCard.jsx";
-import {attack, checkWinningCondition} from "./battle.js";
+import {attack, checkWinningCondition, opponentTurn} from "./battle.js";
 import WinningScreen from "./components/WinningScreen.jsx";
 
 function App() {
@@ -41,11 +41,17 @@ function App() {
       const filteredTeam = opponentTeam.filter(hero => hero !== target);
       setOpponentTeam(filteredTeam);
       const message = checkWinningCondition(playerTeam, filteredTeam);
-      if (message)
+      if (message) {
         setWinningMessage(message);
+        return;
+      }
     }
 
-    // opponentTurn();
+    const updatedPlayerTeam = opponentTurn(opponentTeam, playerTeam);
+    setPlayerTeam(updatedPlayerTeam);
+    const message = checkWinningCondition(updatedPlayerTeam, opponentTeam);
+    if (message)
+      setWinningMessage(message);
   }
 
   return (

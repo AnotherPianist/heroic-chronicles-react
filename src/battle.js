@@ -1,3 +1,5 @@
+import {getRandomElement} from "./helper.js";
+
 export function attack(attacker, attackType, target) {
   const attackValue = attacker["attacks"][attackType];
   const targetHP = target["hp"];
@@ -14,4 +16,18 @@ export function checkWinningCondition(playerTeam, opponentTeam) {
     return "PLAYER TEAM WINS!";
   else
     return "";
+}
+
+export function opponentTurn(opponentTeam, playerTeam) {
+  const attacker = getRandomElement(opponentTeam);
+  const target = getRandomElement(playerTeam);
+
+  const attackType = getRandomElement(Object.keys(attacker["attacks"]));
+
+  attack(attacker, attackType, target);
+
+  if (target["hp"] === 0)
+    return playerTeam.filter(hero => hero !== target);
+
+  return playerTeam;
 }
