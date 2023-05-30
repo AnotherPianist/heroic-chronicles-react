@@ -37,19 +37,21 @@ function App() {
     setSelectedAttack(null);
     setSelectedTarget(null);
 
+    let updatedOpponentTeam = opponentTeam;
+
     if (target["hp"] == 0) {
-      const filteredTeam = opponentTeam.filter(hero => hero !== target);
-      setOpponentTeam(filteredTeam);
-      const message = checkWinningCondition(playerTeam, filteredTeam);
+      const updatedOpponentTeam = opponentTeam.filter(hero => hero !== target);
+      setOpponentTeam(updatedOpponentTeam);
+      const message = checkWinningCondition(playerTeam, updatedOpponentTeam);
       if (message) {
         setWinningMessage(message);
         return;
       }
     }
 
-    const updatedPlayerTeam = opponentTurn(opponentTeam, playerTeam);
+    const updatedPlayerTeam = opponentTurn(updatedOpponentTeam, playerTeam);
     setPlayerTeam(updatedPlayerTeam);
-    const message = checkWinningCondition(updatedPlayerTeam, opponentTeam);
+    const message = checkWinningCondition(updatedPlayerTeam, updatedOpponentTeam);
     if (message)
       setWinningMessage(message);
   }
