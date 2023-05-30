@@ -13,3 +13,17 @@ export function generateFiliationCoefficient(heroAlignment, teamAlignment) {
 
   return heroAlignment === teamAlignment ? value : 1 / value;
 }
+
+export function calculateStats(hero) {
+  const baseStats = hero["powerstats"];
+  const actualStamina = hero["actualStamina"];
+  const fb = hero["filiationCoefficient"];
+
+  const stats = {};
+
+  Object.keys(baseStats).forEach(stat => {
+    stats[stat] = Math.floor(((2 * baseStats[stat] + actualStamina[stat]) / 1.1)) * fb
+  });
+
+  return stats;
+}

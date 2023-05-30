@@ -67,6 +67,11 @@ function populateFiliationCoefficient(team) {
 }
 
 
+function populateStats(team) {
+  team.forEach(hero => hero["stats"] = calculateStats(hero));
+}
+
+
 export async function createTeams() {
   const teamSize = config["TEAM_SIZE"];
 
