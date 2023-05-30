@@ -36,3 +36,16 @@ export function calculateHP(hero) {
 
   return hp;
 }
+
+export function calculateAttacks(hero) {
+  const stats = hero["stats"];
+  const fb = hero["filiationCoefficient"];
+
+  const attacks = {
+    "mental": Math.floor((stats["intelligence"] * 0.7 + stats["speed"] * 0.2 + stats["combat"] * 0.1) * fb),
+    "strong": Math.floor((stats["strength"] * 0.6 + stats["power"] * 0.2 + stats["combat"] * 0.2) * fb),
+    "fast": Math.floor((stats["speed"] * 0.55 + stats["durability"] * 0.25 + stats["strength"] * 0.2) * fb)
+  };
+
+  return attacks;
+}

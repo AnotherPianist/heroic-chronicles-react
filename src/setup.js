@@ -1,6 +1,12 @@
 import {getRandomIntInclusive} from "./helper.js";
 import config from "./config.json";
-import {calculateHP, calculateStats, generateActualStamina, generateFiliationCoefficient} from "./stats.js";
+import {
+  calculateAttacks,
+  calculateHP,
+  calculateStats,
+  generateActualStamina,
+  generateFiliationCoefficient
+} from "./stats.js";
 
 
 function getRandomIds(start, end, length) {
@@ -89,6 +95,11 @@ function populateHP(team) {
 }
 
 
+function populateAttacks(team) {
+  team.forEach(hero => hero["attacks"] = calculateAttacks(hero));
+}
+
+
 export async function createTeams() {
   const teamSize = config["TEAM_SIZE"];
 
@@ -105,6 +116,7 @@ export async function createTeams() {
     populateFiliationCoefficient(team);
     populateStats(team);
     populateHP(team);
+    populateAttacks(team);
   });
 
   return teams;
