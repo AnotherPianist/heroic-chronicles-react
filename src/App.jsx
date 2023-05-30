@@ -1,20 +1,29 @@
 import {useEffect, useState} from "react";
 import {createTeams} from "./setup.js";
 import HeroCard from "./components/HeroCard.jsx";
-import {attack} from "./battle.js";
+import {attack, checkWinningCondition} from "./battle.js";
+import WinningScreen from "./components/WinningScreen.jsx";
 
 function App() {
   const [opponentTeam, setOpponentTeam] = useState([]);
   const [playerTeam, setPlayerTeam] = useState([]);
+  const [winningMessage, setWinningMessage] = useState("");
   const [selectedAttack, setSelectedAttack] = useState(null);
   const [selectedTarget, setSelectedTarget] = useState(null);
 
   useEffect(() => {
+    if (!winningMessage)
+      newGame();
+  }, [winningMessage]);
+
+  function newGame() {
     createTeams().then(([team1, team2]) => {
       setOpponentTeam(team1);
       setPlayerTeam(team2);
     });
-  }, []);
+
+    setWinningMessage("");
+  }
 
   function handleAttackSelected([attacker, attackType]) {
     setSelectedAttack([attacker, attackType]);
@@ -28,8 +37,15 @@ function App() {
     setSelectedAttack(null);
     setSelectedTarget(null);
 
-    if (target["hp"] == 0)
-      setOpponentTeam(opponentTeam.filter(hero => hero !== target));
+    if (target["hp"] == 0) {
+      const filteredTeam = opponentTeam.filter(hero => hero !== target);
+      setOpponentTeam(filteredTeam);
+      const message = checkWinningCondition(playerTeam, filteredTeam);
+      if (message)
+        setWinningMessage(message);
+    }
+
+    // opponentTurn();
   }
 
   return (
@@ -55,6 +71,7 @@ function App() {
             />
           ))}
         </div>
+        {winningMessage && <WinningScreen message={winningMessage} newGame={newGame} /> }
       </div>
     </>
   );

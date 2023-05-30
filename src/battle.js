@@ -6,3 +6,12 @@ export function attack(attacker, attackType, target) {
 
   target["hp"] = resultingHP;
 }
+
+export function checkWinningCondition(playerTeam, opponentTeam) {
+  if (playerTeam.length === 0)
+    return "OPPONENT TEAM WINS!";
+  else if (opponentTeam.length === 0)
+    return "PLAYER TEAM WINS!";
+  else
+    return "";
+}
