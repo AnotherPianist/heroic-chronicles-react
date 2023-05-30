@@ -4,6 +4,7 @@ import HeroCard from "./components/HeroCard.jsx";
 import {attack, checkWinningCondition, opponentAttack} from "./battle.js";
 import WinningScreen from "./components/WinningScreen.jsx";
 import {sleep} from "./helper.js";
+import {motion} from "framer-motion";
 
 const MESSAGE_DURATION_MS = 3000;
 
@@ -94,30 +95,30 @@ function App() {
       <div className="absolute inset-0 -z-20 bg-[url(/src/assets/beams.jpg)] bg-center"/>
       <div className="absolute inset-0 -z-10 bg-[url(/src/assets/grid.svg)] bg-center"/>
       <div className="flex flex-col items-center justify-center gap-4 h-screen">
-        <div className="relative w-full flex flex-row gap-10 items-center justify-center">
+        <motion.div layout className="relative w-full flex flex-row gap-10 items-center justify-center">
           <h2 className="absolute top-0 left-0 m-2">Enemy's team</h2>
-          {opponentTeam && opponentTeam.map(hero => (
-            <HeroCard
-              key={hero["id"]}
-              data={hero}
-              targetSelectable={!!selectedAttack}
-              onTargetSelected={handleTargetSelected}
-            />
-          ))}
-        </div>
+            {opponentTeam && opponentTeam.map(hero => (
+              <HeroCard
+                key={hero["id"]}
+                data={hero}
+                targetSelectable={!!selectedAttack}
+                onTargetSelected={handleTargetSelected}
+              />
+            ))}
+        </motion.div>
         <p>{message}</p>
-        <div className="relative w-full flex flex-row gap-10 items-center justify-center">
+        <motion.div layout className="relative w-full flex flex-row gap-10 items-center justify-center">
           <h2 className="absolute top-0 left-0 m-2">Your team</h2>
-          {playerTeam && playerTeam.map(hero => (
-            <HeroCard
-              key={hero["id"]}
-              data={hero}
-              attackSelectable={!selectedAttack}
-              selectedAttack={selectedAttack}
-              onAttackSelected={handleAttackSelected}
-            />
-          ))}
-        </div>
+            {playerTeam && playerTeam.map(hero => (
+              <HeroCard
+                key={hero["id"]}
+                data={hero}
+                attackSelectable={!selectedAttack}
+                selectedAttack={selectedAttack}
+                onAttackSelected={handleAttackSelected}
+              />
+            ))}
+        </motion.div>
         {winningMessage && <WinningScreen message={winningMessage} newGame={newGame} /> }
       </div>
     </>

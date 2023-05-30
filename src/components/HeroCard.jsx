@@ -1,6 +1,7 @@
 import heartImage from "../assets/heart.svg";
 import notFound from "../assets/404.png";
 import AnimatedNumber from "react-animated-numbers";
+import {motion} from "framer-motion";
 
 export default function HeroCard({data, attackSelectable, targetSelectable, selectedAttack, onAttackSelected, onTargetSelected}) {
   function onImageError(e) {
@@ -26,7 +27,8 @@ export default function HeroCard({data, attackSelectable, targetSelectable, sele
   }
 
   return (
-    <div
+    <motion.div
+      layout
       className={`relative flex flex-col rounded-lg overflow-hidden bg-gray-50 shadow-xl ${checkTargetSelectable()}`}
       onClick={() => targetSelectable && onTargetSelected(data)}
     >
@@ -68,6 +70,6 @@ export default function HeroCard({data, attackSelectable, targetSelectable, sele
           </p>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 }
