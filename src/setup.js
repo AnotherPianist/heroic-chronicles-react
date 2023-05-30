@@ -14,13 +14,25 @@ function getRandomIds(start, end, length) {
   return ids;
 }
 
+function parseStats(stats, minRandomVal = 10, maxRandomVal = 50) {
+  Object.entries(stats).forEach(([stat, val]) => {
+    stats[stat] = (val === 'null') ? getRandomIntInclusive(minRandomVal, maxRandomVal) : parseInt(val);
+  })
+
+  return stats;
+}
+
 async function fetchHeroData(id) {
   const baseUrl = config["BASE_URL"];
   const accessToken = import.meta.env.VITE_API_ACCESS_TOKEN;
   const url = `${baseUrl}/${accessToken}/${id}`;
 
-  const response = await fetch(url)
-  return await response.json();
+  const response = await fetch(url);
+  const data = await response.json();
+
+  data["powerstats"] = parseStats(data["powerstats"]);
+
+  return data;
 }
 
 function fetchHeroesData(ids) {
