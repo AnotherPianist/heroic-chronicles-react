@@ -18,7 +18,7 @@ export function checkWinningCondition(playerTeam, opponentTeam) {
     return "";
 }
 
-export function opponentTurn(opponentTeam, playerTeam) {
+export function opponentAttack(opponentTeam, playerTeam) {
   const attacker = getRandomElement(opponentTeam);
   const target = getRandomElement(playerTeam);
 
@@ -26,8 +26,10 @@ export function opponentTurn(opponentTeam, playerTeam) {
 
   attack(attacker, attackType, target);
 
-  if (target["hp"] === 0)
-    return playerTeam.filter(hero => hero !== target);
+  let updatedPlayerTeam = playerTeam;
 
-  return playerTeam;
+  if (target["hp"] === 0)
+    updatedPlayerTeam = playerTeam.filter(hero => hero !== target);
+
+  return [attacker, attackType, target, updatedPlayerTeam];
 }
