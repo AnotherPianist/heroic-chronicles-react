@@ -1,5 +1,6 @@
 import heartImage from "../assets/heart.svg";
 import notFound from "../assets/404.png";
+import AnimatedNumber from "react-animated-numbers";
 
 export default function HeroCard({data, attackSelectable, targetSelectable, selectedAttack, onAttackSelected, onTargetSelected}) {
   function onImageError(e) {
@@ -32,7 +33,17 @@ export default function HeroCard({data, attackSelectable, targetSelectable, sele
       <img src={data["image"]["url"]} className="max-h-[300px] object-cover" onError={onImageError}/>
       <div className="absolute top-0 right-0">
         <img src={heartImage}/>
-        <p className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-4 text-white">{data["hp"]}</p>
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-4 text-white">
+          <AnimatedNumber
+            animateToNumber={data["hp"]}
+            configs={[
+              { mass: 1, tension: 220, friction: 100 },
+              { mass: 1, tension: 180, friction: 130 },
+              { mass: 1, tension: 280, friction: 90 },
+              { mass: 1, tension: 180, friction: 135 }
+            ]}
+          />
+        </div>
       </div>
       <div className="p-4">
         <h3>{data["name"]}</h3>
