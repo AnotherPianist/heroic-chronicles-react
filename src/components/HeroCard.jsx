@@ -8,7 +8,11 @@ export default function HeroCard({data, attackSelectable, targetSelectable, sele
   }
 
   function checkAttackSelectable() {
-    return (attackSelectable ? "hover:border-2 hover:cursor-pointer" : "");
+    return (attackSelectable ? "hover:border-2 hover:cursor-pointer animate-pulse" : "");
+  }
+
+  function checkTargetSelectable() {
+    return (targetSelectable ? "hover:border-2 hover:cursor-pointer animate-pulse" : "");
   }
 
   function checkSelectedAttack(attackType) {
@@ -22,7 +26,7 @@ export default function HeroCard({data, attackSelectable, targetSelectable, sele
 
   return (
     <div
-      className={`relative flex flex-col rounded-lg overflow-hidden bg-gray-50 shadow-xl ${targetSelectable && "hover:cursor-pointer"}`}
+      className={`relative flex flex-col rounded-lg overflow-hidden bg-gray-50 shadow-xl ${checkTargetSelectable()}`}
       onClick={() => targetSelectable && onTargetSelected(data)}
     >
       <img src={data["image"]["url"]} className="max-h-[300px] object-cover" onError={onImageError}/>

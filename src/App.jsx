@@ -62,7 +62,12 @@ function App() {
         <div className="relative w-full flex flex-row gap-10 items-center justify-center">
           <h2 className="absolute top-0 left-0 m-2">Enemy's team</h2>
           {opponentTeam && opponentTeam.map(hero => (
-            <HeroCard key={hero["id"]} data={hero} targetSelectable={true} onTargetSelected={handleTargetSelected} />
+            <HeroCard
+              key={hero["id"]}
+              data={hero}
+              targetSelectable={!!selectedAttack}
+              onTargetSelected={handleTargetSelected}
+            />
           ))}
         </div>
         <div className="relative w-full flex flex-row gap-10 items-center justify-center">
@@ -71,7 +76,7 @@ function App() {
             <HeroCard
               key={hero["id"]}
               data={hero}
-              attackSelectable={true}
+              attackSelectable={!selectedAttack}
               selectedAttack={selectedAttack}
               onAttackSelected={handleAttackSelected}
             />
